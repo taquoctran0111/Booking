@@ -33,6 +33,7 @@ app.use(bodyParser.json())
 
 
 app.use("/hotels", require("./src/hotels/hotelControllers.js"))
+app.use("/travels", require("./src/travels/travelControllers.js"))
 
 app.listen(PORT, () => {
   console.log("Server started on http://localhost:" + PORT);

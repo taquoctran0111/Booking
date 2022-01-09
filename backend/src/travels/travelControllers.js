@@ -1,13 +1,13 @@
 let express = require("express");
 let router = new express.Router();
 
-let {getHotel, getHotels, createHotel, updateHotel, deleteHotel} = require("./hotelServices");
+let {getTravel, getTravels, createTravel, updateTravel, deleteTravel} = require("./travelServices");
 
 router.get("/", async (req, res, next) => {
     try {
-      let result = await getHotels();
+      let result = await getTravels();
       if (result === null) {
-        return res.status(404).send({message: "Not found hotels"});
+        return res.status(404).send({message: "Not found travels"});
       }
       return res.send({result});
     } catch (error) {
@@ -16,12 +16,12 @@ router.get("/", async (req, res, next) => {
     }
 });
 
-router.get("/:hotelId", async (req, res, next) => {
+router.get("/:travelId", async (req, res, next) => {
     try {
-      let {hotelId} = req.params;
-      let result = await getHotel(hotelId);
+      let {travelId} = req.params;
+      let result = await getTravel(travelId);
       if (result === null) {
-        return res.status(404).send({message: "Not found hotel"});
+        return res.status(404).send({message: "Not found travel"});
       }
       return res.send({result});
     } catch (error) {
@@ -40,7 +40,7 @@ router.post("/", async (req, res, next) => {
       let thumbnail = req.body.thumbnail;
       let description = req.body.description;
 
-      let result = await createHotel(name, address, city_id, price, num_room, image, thumbnail, description);
+      let result = await createTravel(name, address, city_id, price, num_room, image, thumbnail, description);
       return res.send({
         message: "Create successfully.",
         data: result
@@ -50,9 +50,9 @@ router.post("/", async (req, res, next) => {
     }
 });
 
-router.put("/:hotelId", async (req, res, next) => {
+router.put("/:travelId", async (req, res, next) => {
   try {
-    let {hotelId} = req.params;
+    let {travelId} = req.params;
     let name = req.body.name;
     let address = req.body.address;
     let city_id = req.body.city_id;
@@ -62,7 +62,7 @@ router.put("/:hotelId", async (req, res, next) => {
     let thumbnail = req.body.thumbnail;
     let description = req.body.description;
 
-    let result = await updateHotel(hotelId, name, address, city_id, price, num_room, image, thumbnail, description);
+    let result = await updateTravel(travelId, name, address, city_id, price, num_room, image, thumbnail, description);
     if (result === null) {
       return res.status(404).send({message: "Update fail!"});
     }
@@ -75,10 +75,10 @@ router.put("/:hotelId", async (req, res, next) => {
   }
 });
 
-router.delete("/:hotelId", async (req, res, next) => {
+router.delete("/:travelId", async (req, res, next) => {
   try {
-    let {hotelId} = req.params;
-    let result = await deleteHotel(hotelId);
+    let {travelId} = req.params;
+    let result = await deleteTravel(travelId);
     if (result === null) {
       return res.status(404).send({message: "Delete fail"});
     }
